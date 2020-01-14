@@ -1,10 +1,10 @@
+/* eslint-disable no-console */
 const express = require("express");
 const bodyParser = require("body-parser");
 const { MongoClient } = require("mongodb");
-const { username, password } = require("./config");
+const { username, password, port } = require("./config");
 
 const app = express();
-const port = 3000;
 app.use(bodyParser.urlencoded({ extended: true }));
 
 let db;
@@ -16,7 +16,7 @@ MongoClient.connect(url, (err, database) => {
     return console.log(err);
   }
   db = database.db("quotes");
-  app.listen(port || 3000, () => {
+  return app.listen(port || 3000, () => {
     console.log(`listening on ${port}`);
   });
 });
@@ -29,7 +29,7 @@ app.get("/", (req, res) => {
     .toArray((err, result) => {
       if (err) return console.log(err);
       // renders index.ejs
-      res.render("index.ejs", { quotes: result });
+      return res.render("index.ejs", { quotes: result });
     });
 });
 
@@ -38,6 +38,6 @@ app.post("/quotes", (req, res) => {
     if (err) return console.log(err);
 
     console.log("saved to database");
-    res.redirect("/");
+    return res.redirect("/");
   });
 });
