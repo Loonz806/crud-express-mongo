@@ -8,7 +8,10 @@ app.listen(port, function listen() {
 });
 
 app.get("/", (req, res) => {
+  console.log(__dirname);
   res.sendFile(__dirname + "/index.html");
-  // Note: __dirname is directory that contains the JavaScript source code. Try logging it and see what you get!
-  // Mine was '/Users/zellwk/Projects/demo-repos/crud-express-mongo' for this app.
+});
+
+app.post("/quotes", (req, res) => {
+  console.log("Hellooooooooooooooooo!");
 });
