@@ -1,14 +1,14 @@
 {
   "name": "crud-express-mongo",
   "version": "1.0.0",
-  "description": "",
+  "description": "an example crud-express-mongo example",
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "loonz806",
   "license": "ISC",
   "devDependencies": {
     "eslint": "^6.8.0",
