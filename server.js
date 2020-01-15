@@ -5,7 +5,9 @@ const { MongoClient } = require("mongodb");
 const { username, password, port } = require("./config");
 
 const app = express();
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static("public"));
 
 let db;
 const url = `mongodb://${username}:${password}@ds263448.mlab.com:63448/quotes`;
@@ -40,4 +42,8 @@ app.post("/quotes", (req, res) => {
     console.log("saved to database");
     return res.redirect("/");
   });
+});
+
+app.put("/quotes", (req, res) => {
+  // handle put request
 });
