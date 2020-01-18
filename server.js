@@ -12,7 +12,6 @@ app.use(express.static("public"));
 let db;
 const url = `mongodb://${username}:${password}@ds263448.mlab.com:63448/quotes`;
 
-// Remember to change YOUR_USERNAME and YOUR_PASSWORD to your username and password!
 MongoClient.connect(url, (err, database) => {
   if (err) {
     return console.log(err);
@@ -24,6 +23,8 @@ MongoClient.connect(url, (err, database) => {
 });
 
 app.set("view engine", "ejs");
+app.use(express.static("public"));
+app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
   db.collection("quotes")
@@ -36,7 +37,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/quotes", (req, res) => {
-  db.collection("quotes").save(req.body, (err, result) => {
+  db.collection("quotes").save(req.body, err => {
     if (err) return console.log(err);
 
     console.log("saved to database");
@@ -60,6 +61,17 @@ app.put("/quotes", (req, res) => {
     (err, result) => {
       if (err) return res.send(err);
       res.send(result);
+    }
+  );
+});
+
+app.delete("/quotes", (req, res) => {
+  // Handle delete event here
+  db.collection("quotes").findOneAndDelete(
+    { name: req.body.name },
+    (err, result) => {
+      if (err) return res.send(500, err);
+      res.send({ message: "A darth vadar quote got deleted" });
     }
   );
 });

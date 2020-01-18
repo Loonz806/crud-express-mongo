@@ -1,13 +1,43 @@
-// main.js
+/* eslint-disable no-console */
 const update = document.getElementById("update");
+const del = document.getElementById("delete");
+
 update.addEventListener("click", () => {
   // Send PUT Request here
-  axios({
+  fetch("quotes", {
     method: "put",
-    url: "quotes",
-    data: {
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
       name: "Darth Vader",
-      quote: "I find your lack of faith disturbing"
-    }
-  });
+      quote: "I find your lack of faith disturbing."
+    })
+  })
+    .then(res => {
+      if (res.ok) return res.json();
+    })
+    .then(data => {
+      console.log(data);
+      window.location.reload(true);
+    });
+});
+
+del.addEventListener("click", () => {
+  fetch("quotes", {
+    method: "delete",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      name: "Darth Vader"
+    })
+  })
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+    })
+    .then(data => {
+      console.log(data);
+      window.location.reload();
+    });
 });
